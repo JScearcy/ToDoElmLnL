@@ -122,10 +122,6 @@ view model =
                 , toggleVisBtn model.display
                 ]
             ]
-        , section [ class "todoContainer fullHeight" ]
-            [ h3 [] [ text "ToDos: " ]
-            , renderTodos model
-            ]
         ]
 
 
@@ -137,33 +133,3 @@ toggleVisBtn display =
 
         False ->
             button [ onClick Hide ] [ text "Show Completed" ]
-
-
-renderTodos : Model -> Html Msg
-renderTodos model =
-    ul [] (List.map (renderTodo model.display) model.todos)
-
-
-renderTodo : Bool -> Todo -> Html Msg
-renderTodo show todo =
-    let
-        classes =
-            if (not show) && todo.completed then
-                "todoItem hidden"
-            else
-                "todoItem"
-    in
-        li [ class classes ]
-            [ p [] [ text todo.name ]
-            , label [ for (toString todo.id) ]
-                [ text "(Complete: "
-                , input
-                    [ onCheck (Complete todo.id)
-                    , id (toString todo.id)
-                    , type' "checkbox"
-                    , checked todo.completed
-                    ]
-                    []
-                , text " )"
-                ]
-            ]

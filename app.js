@@ -7992,62 +7992,6 @@ var _user$project$Main$Complete = F2(
 	function (a, b) {
 		return {ctor: 'Complete', _0: a, _1: b};
 	});
-var _user$project$Main$renderTodo = F2(
-	function (show, todo) {
-		var classes = (_elm_lang$core$Basics$not(show) && todo.completed) ? 'todoItem hidden' : 'todoItem';
-		return A2(
-			_elm_lang$html$Html$li,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html_Attributes$class(classes)
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					A2(
-					_elm_lang$html$Html$p,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text(todo.name)
-						])),
-					A2(
-					_elm_lang$html$Html$label,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$for(
-							_elm_lang$core$Basics$toString(todo.id))
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('(Complete: '),
-							A2(
-							_elm_lang$html$Html$input,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Events$onCheck(
-									_user$project$Main$Complete(todo.id)),
-									_elm_lang$html$Html_Attributes$id(
-									_elm_lang$core$Basics$toString(todo.id)),
-									_elm_lang$html$Html_Attributes$type$('checkbox'),
-									_elm_lang$html$Html_Attributes$checked(todo.completed)
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[])),
-							_elm_lang$html$Html$text(' )')
-						]))
-				]));
-	});
-var _user$project$Main$renderTodos = function (model) {
-	return A2(
-		_elm_lang$html$Html$ul,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		A2(
-			_elm_lang$core$List$map,
-			_user$project$Main$renderTodo(model.display),
-			model.todos));
-};
 var _user$project$Main$Remove = {ctor: 'Remove'};
 var _user$project$Main$Hide = {ctor: 'Hide'};
 var _user$project$Main$toggleVisBtn = function (display) {
@@ -8136,24 +8080,6 @@ var _user$project$Main$view = function (model) {
 									])),
 								_user$project$Main$toggleVisBtn(model.display)
 							]))
-					])),
-				A2(
-				_elm_lang$html$Html$section,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('todoContainer fullHeight')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$h3,
-						_elm_lang$core$Native_List.fromArray(
-							[]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('ToDos: ')
-							])),
-						_user$project$Main$renderTodos(model)
 					]))
 			]));
 };
