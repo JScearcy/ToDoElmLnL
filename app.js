@@ -7894,8 +7894,8 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
-var _user$project$Main$isComplete = function (todo) {
-	return todo.completed;
+var _user$project$Main$notCompleted = function (todo) {
+	return _elm_lang$core$Native_Utils.eq(todo.completed, false);
 };
 var _user$project$Main$createTodo = F2(
 	function (name, id) {
@@ -7947,7 +7947,7 @@ var _user$project$Main$update = F2(
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{
-							todos: A2(_elm_lang$core$List$filter, _user$project$Main$isComplete, model.todos)
+							todos: A2(_elm_lang$core$List$filter, _user$project$Main$notCompleted, model.todos)
 						}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
@@ -7994,10 +7994,13 @@ var _user$project$Main$Complete = F2(
 	});
 var _user$project$Main$renderTodo = F2(
 	function (show, todo) {
+		var classes = (_elm_lang$core$Basics$not(show) && todo.completed) ? 'todoItem hidden' : 'todoItem';
 		return A2(
 			_elm_lang$html$Html$li,
 			_elm_lang$core$Native_List.fromArray(
-				[]),
+				[
+					_elm_lang$html$Html_Attributes$class(classes)
+				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
 					A2(
@@ -8026,7 +8029,9 @@ var _user$project$Main$renderTodo = F2(
 							_elm_lang$html$Html_Events$onCheck(
 							_user$project$Main$Complete(todo.id)),
 							_elm_lang$html$Html_Attributes$id(
-							_elm_lang$core$Basics$toString(todo.id))
+							_elm_lang$core$Basics$toString(todo.id)),
+							_elm_lang$html$Html_Attributes$type$('checkbox'),
+							_elm_lang$html$Html_Attributes$checked(todo.completed)
 						]),
 					_elm_lang$core$Native_List.fromArray(
 						[]))
@@ -8078,7 +8083,9 @@ var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
-			[]),
+			[
+				_elm_lang$html$Html_Attributes$class('fullHeight')
+			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
@@ -8090,7 +8097,9 @@ var _user$project$Main$view = function (model) {
 						A2(
 						_elm_lang$html$Html$div,
 						_elm_lang$core$Native_List.fromArray(
-							[]),
+							[
+								_elm_lang$html$Html_Attributes$class('todoInput')
+							]),
 						_elm_lang$core$Native_List.fromArray(
 							[
 								A2(
@@ -8130,7 +8139,9 @@ var _user$project$Main$view = function (model) {
 				A2(
 				_elm_lang$html$Html$section,
 				_elm_lang$core$Native_List.fromArray(
-					[]),
+					[
+						_elm_lang$html$Html_Attributes$class('todoContainer fullHeight')
+					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(

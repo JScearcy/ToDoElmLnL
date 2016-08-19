@@ -1,0 +1,34 @@
+html {
+    height: 100%;
+}
+body {
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.todoItem p {
+    display: inline;
+    margin: 0 5px 0 0;
+}
+
+.todoInput {
+    text-align: center;
+    background-color: #999;
+    padding: 20px 10px;
+}
+
+.todoContainer {
+    background-color: #DDD;
+    margin: 0;
+    padding: 10px;
+    height: 100%;
+}
+
+.fullHeight {
+    height: 100%;
+}
