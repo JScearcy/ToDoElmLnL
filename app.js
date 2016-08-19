@@ -72,11 +72,11 @@
         return nodeArray;
     }
 
-    function RemoveTodo(el, className) {
+    function RemoveTodo(el) {
         el.parentNode.removeChild(el);
     }
 
-    function HideTodo(el, className) {
+    function HideTodo(el) {
         if (!el.classList.contains('hidden')) {
             el.classList.add('hidden');
         }
