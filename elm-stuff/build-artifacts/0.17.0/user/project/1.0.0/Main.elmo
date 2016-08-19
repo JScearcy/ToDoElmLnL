@@ -1,0 +1,254 @@
+var _user$project$Main$isComplete = function (todo) {
+	return todo.completed;
+};
+var _user$project$Main$createTodo = F2(
+	function (name, id) {
+		return {name: name, completed: false, id: id};
+	});
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'UpdateInput':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{input: _p0._0}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+			case 'Add':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							currentId: model.currentId + 1,
+							input: '',
+							todos: _elm_lang$core$String$isEmpty(model.input) ? model.todos : A2(
+								_elm_lang$core$Basics_ops['++'],
+								model.todos,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										A2(_user$project$Main$createTodo, model.input, model.currentId)
+									]))
+						}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+			case 'Hide':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							display: _elm_lang$core$Basics$not(model.display)
+						}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+			case 'Remove':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							todos: A2(_elm_lang$core$List$filter, _user$project$Main$isComplete, model.todos)
+						}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+			default:
+				var updateTodo = function (t) {
+					return _elm_lang$core$Native_Utils.eq(t.id, _p0._0) ? _elm_lang$core$Native_Utils.update(
+						t,
+						{completed: _p0._1}) : t;
+				};
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							todos: A2(_elm_lang$core$List$map, updateTodo, model.todos)
+						}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+		}
+	});
+var _user$project$Main$emptyModel = {
+	todos: _elm_lang$core$Native_List.fromArray(
+		[]),
+	input: '',
+	currentId: 0,
+	display: true
+};
+var _user$project$Main$init = A2(
+	_elm_lang$core$Platform_Cmd_ops['!'],
+	_user$project$Main$emptyModel,
+	_elm_lang$core$Native_List.fromArray(
+		[]));
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {todos: a, input: b, currentId: c, display: d};
+	});
+var _user$project$Main$Todo = F3(
+	function (a, b, c) {
+		return {name: a, completed: b, id: c};
+	});
+var _user$project$Main$Complete = F2(
+	function (a, b) {
+		return {ctor: 'Complete', _0: a, _1: b};
+	});
+var _user$project$Main$renderTodo = F2(
+	function (show, todo) {
+		return A2(
+			_elm_lang$html$Html$li,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$p,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(todo.name)
+						])),
+					A2(
+					_elm_lang$html$Html$label,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$for(
+							_elm_lang$core$Basics$toString(todo.id))
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('Complete: ')
+						])),
+					A2(
+					_elm_lang$html$Html$input,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Events$onCheck(
+							_user$project$Main$Complete(todo.id)),
+							_elm_lang$html$Html_Attributes$id(
+							_elm_lang$core$Basics$toString(todo.id))
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[]))
+				]));
+	});
+var _user$project$Main$renderTodos = function (model) {
+	return A2(
+		_elm_lang$html$Html$ul,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		A2(
+			_elm_lang$core$List$map,
+			_user$project$Main$renderTodo(model.display),
+			model.todos));
+};
+var _user$project$Main$Remove = {ctor: 'Remove'};
+var _user$project$Main$Hide = {ctor: 'Hide'};
+var _user$project$Main$toggleVisBtn = function (display) {
+	var _p1 = display;
+	if (_p1 === true) {
+		return A2(
+			_elm_lang$html$Html$button,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Events$onClick(_user$project$Main$Hide)
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Hide Completed')
+				]));
+	} else {
+		return A2(
+			_elm_lang$html$Html$button,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Events$onClick(_user$project$Main$Hide)
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Show Completed')
+				]));
+	}
+};
+var _user$project$Main$Add = {ctor: 'Add'};
+var _user$project$Main$UpdateInput = function (a) {
+	return {ctor: 'UpdateInput', _0: a};
+};
+var _user$project$Main$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$section,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html$input,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Events$onInput(_user$project$Main$UpdateInput),
+										_elm_lang$html$Html_Attributes$placeholder('Todo'),
+										_elm_lang$html$Html_Attributes$type$('text'),
+										_elm_lang$html$Html_Attributes$value(model.input)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[])),
+								A2(
+								_elm_lang$html$Html$button,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Events$onClick(_user$project$Main$Add)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('Add Todo')
+									])),
+								A2(
+								_elm_lang$html$Html$button,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Events$onClick(_user$project$Main$Remove)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('Remove Completed')
+									])),
+								_user$project$Main$toggleVisBtn(model.display)
+							]))
+					])),
+				A2(
+				_elm_lang$html$Html$section,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_user$project$Main$renderTodos(model)
+					]))
+			]));
+};
+var _user$project$Main$main = {
+	main: _elm_lang$html$Html_App$program(
+		{
+			init: _user$project$Main$init,
+			view: _user$project$Main$view,
+			update: _user$project$Main$update,
+			subscriptions: function (_p2) {
+				return _elm_lang$core$Platform_Sub$none;
+			}
+		})
+};
