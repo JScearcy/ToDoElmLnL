@@ -155,6 +155,15 @@ renderTodo show todo =
     in
         li [ class classes ]
             [ p [] [ text todo.name ]
-            , label [ for (toString todo.id) ] [ text "Complete: " ]
-            , input [ onCheck (Complete todo.id), id (toString todo.id), type' "checkbox", checked todo.completed ] []
+            , label [ for (toString todo.id) ]
+                [ text "(Complete: "
+                , input
+                    [ onCheck (Complete todo.id)
+                    , id (toString todo.id)
+                    , type' "checkbox"
+                    , checked todo.completed
+                    ]
+                    []
+                , text " )"
+                ]
             ]

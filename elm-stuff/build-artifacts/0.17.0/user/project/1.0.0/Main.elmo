@@ -124,21 +124,22 @@ var _user$project$Main$renderTodo = F2(
 						]),
 					_elm_lang$core$Native_List.fromArray(
 						[
-							_elm_lang$html$Html$text('Complete: ')
-						])),
-					A2(
-					_elm_lang$html$Html$input,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Events$onCheck(
-							_user$project$Main$Complete(todo.id)),
-							_elm_lang$html$Html_Attributes$id(
-							_elm_lang$core$Basics$toString(todo.id)),
-							_elm_lang$html$Html_Attributes$type$('checkbox'),
-							_elm_lang$html$Html_Attributes$checked(todo.completed)
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[]))
+							_elm_lang$html$Html$text('(Complete: '),
+							A2(
+							_elm_lang$html$Html$input,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Events$onCheck(
+									_user$project$Main$Complete(todo.id)),
+									_elm_lang$html$Html_Attributes$id(
+									_elm_lang$core$Basics$toString(todo.id)),
+									_elm_lang$html$Html_Attributes$type$('checkbox'),
+									_elm_lang$html$Html_Attributes$checked(todo.completed)
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[])),
+							_elm_lang$html$Html$text(' )')
+						]))
 				]));
 	});
 var _user$project$Main$renderTodos = function (model) {
