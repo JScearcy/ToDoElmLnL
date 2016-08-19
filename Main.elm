@@ -1,4 +1,4 @@
-import Html exposing (Html, Attribute, text, div, input, section, button, ul, li, p, label)
+import Html exposing (Html, Attribute, text, div, input, section, button, ul, li, p, label, h3)
 import Html.Events exposing (onInput, onClick, onCheck)
 import Html.Attributes exposing (placeholder, type', for, id, value)
 import Html.App as App
@@ -106,7 +106,8 @@ view model =
                 ]
             ]
         , section [] 
-            [ renderTodos model
+            [ h3 [] [ text "ToDos: " ]
+            , renderTodos model
             ]
         ]
 
