@@ -5,6 +5,7 @@ import Html.Events exposing (onInput, onClick, onCheck)
 import Html.Attributes exposing (placeholder, type', for, id, value, class, checked)
 import Html.App as App
 import String
+import Keyboard
 
 
 main : Program Never
@@ -13,7 +14,7 @@ main =
         { init = init
         , view = view
         , update = update
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = subscriptions
         }
 
 
@@ -60,6 +61,7 @@ type Msg
     | Hide
     | Remove
     | Complete Int Bool
+    | KeyUp Keyboard.KeyCode
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -96,6 +98,10 @@ update msg model =
             in
                 { model | todos = List.map updateTodo model.todos } ! []
 
+        KeyUp keyCode ->
+            if keyCode == 13 then update Add model
+            else model ! []
+
 
 createTodo : String -> Int -> Todo
 createTodo name id =
@@ -106,6 +112,10 @@ notCompleted : Todo -> Bool
 notCompleted todo =
     todo.completed == False
 
+-- subscriptions
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Keyboard.ups KeyUp
 
 
 -- view
