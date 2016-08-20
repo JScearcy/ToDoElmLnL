@@ -1,13 +1,15 @@
 (function ToDoApp(document) {
     var todoCount = 0,
         todoInput = document.getElementById('todoName'),
-        completedTodosHidden = false;
+        toggleCompleted = document.getElementById('toggleCompletedTodos');
+        completedTodosHidden = false,
+        visible = true;
 
     todoInput.focus();
+    toggleCompleted.addEventListener('click', ToggleCompletedTodos);
     document.getElementById('addTodo').addEventListener('click', ToDoCreate);
     document.getElementById('clearCompletedTodos').addEventListener('click', ClearCompletedTodos);
-    document.getElementById('hideCompletedTodos').addEventListener('click', HideCompletedTodos);
-    document.getElementById('showCompletedTodos').addEventListener('click', ShowCompletedTodos);
+    document.getElementById('todos').addEventListener('click', CheckBoxHandler);
 
     function ToDoCreate(e) {
         e.preventDefault();
@@ -44,23 +46,21 @@
             });
     }
 
-    function HideCompletedTodos(e) {
+    function ToggleCompletedTodos(e) {
         e.preventDefault();
+        visible = !visible;
+
+        if (visible) {
+            toggleCompleted.innerHTML = "Hide Completed"
+        } else if (!visible) {
+            toggleCompleted.innerHTML = "Show Completed";
+        }
 
         NodeListToArray(document.getElementsByClassName('todoItem'))
             .filter(function(el) {
                 return el.querySelector('.completeCheck').checked;
             }).map(function(el) {
-                HideTodo(el);
-            });
-    }
-
-    function ShowCompletedTodos(e) {
-        e.preventDefault();
-        
-        NodeListToArray(document.getElementsByClassName('hidden'))
-            .map(function(el) {
-                el.classList.remove('hidden');
+                ToggleTodo(el);
             });
     }
 
@@ -72,13 +72,24 @@
         return nodeArray;
     }
 
-    function RemoveTodo(el, className) {
+    function RemoveTodo(el) {
         el.parentNode.removeChild(el);
     }
 
-    function HideTodo(el, className) {
+    function ToggleTodo(el) {
         if (!el.classList.contains('hidden')) {
             el.classList.add('hidden');
+        } else {
+            el.classList.remove('hidden');
+        }
+    }
+
+    function CheckBoxHandler(e) {
+        var target = e.target,
+            parent = e.target.parentNode.parentNode;
+        
+        if (!visible && target.classList.contains('completeCheck') && target.checked ) {
+            parent.classList.add('hidden');
         }
     }
 })(document);
