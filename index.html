@@ -5,16 +5,28 @@
         <meta charset="utf-8">
         <title>Elm Todo</title>
         <link rel="stylesheet" type="text/css" href="./site.css">
-        <script type="text/javascript" src="./app.js"></script>
     </head>
 
     <body>
-        <section id="elmApp" class="fullHeight">
+        <section class="todoInput">
+            <form>
+                <input type="text" id="todoName" placeholder="To Do" />
+                <button id="addTodo">Add To-Do</button>
+                <button id="toggleCompletedTodos">Hide Completed</button>
+                <button id="clearCompletedTodos">Clear Completed</button>
+            </form>
+        </section>
+        <section class="todoContainer">
+            <h3>To-Dos:</h3>
+            <ul id="todos">
+            </ul>
         </section>
 
-        <script>
-            var node = document.getElementById('elmApp');
-            Elm.Main.embed(node);
-        </script>
+        <template id="todoTemplate">
+            <p class="name"></p>
+            <label>(Complete: <input type="checkbox" class="completeCheck" />)</label>
+        </template>
+
+        <script type="text/javascript" src="./app.js"></script>
     </body>
 </html>
