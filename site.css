@@ -13,6 +13,7 @@ body {
 
 .todoItem p {
     display: inline;
+    margin: 0 5px 0 0;
 }
 
 .todoInput {
@@ -25,5 +26,9 @@ body {
     background-color: #DDD;
     margin: 0;
     padding: 10px;
+    height: 100%;
+}
+
+.fullHeight {
     height: 100%;
 }

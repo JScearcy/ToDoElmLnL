@@ -1,9 +1,8 @@
 (function ToDoApp(document) {
     var todoCount = 0,
         todoInput = document.getElementById('todoName'),
-        toggleCompleted = document.getElementById('toggleCompletedTodos');
-        completedTodosHidden = false,
-        visible = true;
+        toggleCompleted = document.getElementById('toggleCompletedTodos'),
+        completedVisible = true;
 
     todoInput.focus();
     toggleCompleted.addEventListener('click', ToggleCompletedTodos);
@@ -48,11 +47,11 @@
 
     function ToggleCompletedTodos(e) {
         e.preventDefault();
-        visible = !visible;
+        completedVisible = !completedVisible;
 
-        if (visible) {
+        if (completedVisible) {
             toggleCompleted.innerHTML = "Hide Completed"
-        } else if (!visible) {
+        } else if (!completedVisible) {
             toggleCompleted.innerHTML = "Show Completed";
         }
 
@@ -88,7 +87,7 @@
         var target = e.target,
             parent = e.target.parentNode.parentNode;
         
-        if (!visible && target.classList.contains('completeCheck') && target.checked ) {
+        if (!completedVisible && target.classList.contains('completeCheck') && target.checked ) {
             parent.classList.add('hidden');
         }
     }
