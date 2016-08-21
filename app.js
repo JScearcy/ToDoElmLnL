@@ -1,25 +1,28 @@
-(function ToDoApp(document) {
+(function ToDoApp(window, document, undefined) {
+
+	"use strict";
     var todoCount = 0,
         todoInput = document.getElementById('todoName'),
-        toggleCompleted = document.getElementById('toggleCompletedTodos'),
-        completedVisible = true;
+		todoTemplate = document.getElementById('todoTemplate'),
+		todoContainer = document.getElementById('todos'),
+		toggleCompleted = document.getElementById('toggleCompletedTodos'),
+		completedVisible = true;
 
     todoInput.focus();
-    toggleCompleted.addEventListener('click', ToggleCompletedTodos);
     document.getElementById('addTodo').addEventListener('click', ToDoCreate);
+	toggleCompleted.addEventListener('click', ToggleCompletedTodos);
     document.getElementById('clearCompletedTodos').addEventListener('click', ClearCompletedTodos);
     document.getElementById('todos').addEventListener('click', CheckBoxHandler);
 
     function ToDoCreate(e) {
         e.preventDefault();
 
-        var todoContainer = document.getElementById('todos'),
-            todoName = todoInput.value,
-            template = document.getElementById('todoTemplate').innerHTML,
+        var todoName = todoInput.value,
+            template = todoTemplate.innerHTML,
             newTodo = document.createElement('li');
 
         if (todoName.length) {
-            document.getElementById('todoName').value = "";
+            todoInput.value = "";
             newTodo.classList.add('todoItem');
             newTodo.innerHTML = template;
             newTodo.getElementsByClassName('name')[0].innerHTML = todoName;
@@ -91,4 +94,4 @@
             parent.classList.add('hidden');
         }
     }
-})(document);
+})(window, document);
