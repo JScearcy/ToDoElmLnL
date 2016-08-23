@@ -1,31 +1,29 @@
 (function ToDoApp(window, document, undefined) {
-
-	"use strict";
+	'use strict';
     var todoCount = 0,
         todoInput = document.getElementById('todoName'),
-		todoTemplate = document.getElementById('todoTemplate'),
+		todoTemplate = document.getElementById('todoTemplate').innerHTML,
 		todoContainer = document.getElementById('todos'),
 		toggleCompleted = document.getElementById('toggleCompletedTodos'),
 		completedVisible = true;
 
     todoInput.focus();
-    document.getElementById('addTodo').addEventListener('click', ToDoCreate);
+    todoContainer.addEventListener('click', CheckBoxHandler);
 	toggleCompleted.addEventListener('click', ToggleCompletedTodos);
+    document.getElementById('addTodo').addEventListener('click', ToDoCreate);
     document.getElementById('clearCompletedTodos').addEventListener('click', ClearCompletedTodos);
-    document.getElementById('todos').addEventListener('click', CheckBoxHandler);
 
     function ToDoCreate(e) {
         e.preventDefault();
 
-        var todoName = todoInput.value,
-            template = todoTemplate.innerHTML,
+        var todoName = document.createTextNode(todoInput.value),
             newTodo = document.createElement('li');
 
         if (todoName.length) {
-            todoInput.value = "";
+            todoInput.value = '';
             newTodo.classList.add('todoItem');
-            newTodo.innerHTML = template;
-            newTodo.getElementsByClassName('name')[0].innerHTML = todoName;
+            newTodo.innerHTML = todoTemplate;
+            newTodo.getElementsByClassName('name')[0].appendChild(todoName);
             newTodo.id = todoCount;
 
             todoContainer.appendChild(newTodo);
@@ -40,16 +38,17 @@
     function ClearCompletedTodos(e) {
         e.preventDefault();
 
-        NodeListToArray(document.getElementsByClassName('todoItem'))
-            .filter(function(el) {
-                return el.querySelector('.completeCheck').checked;
-            }).map(function(el) {
-                RemoveTodo(el);
-            });
+        MapCompletedNodes(RemoveTodo);
     }
 
     function ToggleCompletedTodos(e) {
         e.preventDefault();
+
+        VisibilityHandler();
+        MapCompletedNodes(ToggleTodo);
+    }
+
+    function VisibilityHandler() {
         completedVisible = !completedVisible;
 
         if (completedVisible) {
@@ -57,21 +56,15 @@
         } else if (!completedVisible) {
             toggleCompleted.innerHTML = "Show Completed";
         }
+    }
 
-        NodeListToArray(document.getElementsByClassName('todoItem'))
+    function MapCompletedNodes(mapFn) {
+        Array.from(document.getElementsByClassName('todoItem'))
             .filter(function(el) {
                 return el.querySelector('.completeCheck').checked;
             }).map(function(el) {
-                ToggleTodo(el);
+                mapFn(el);
             });
-    }
-
-    function NodeListToArray(nodes) {
-        var nodeArray = [];
-        for (var node of nodes) {
-            nodeArray.push(node);
-        }
-        return nodeArray;
     }
 
     function RemoveTodo(el) {
@@ -90,7 +83,7 @@
         var target = e.target,
             parent = e.target.parentNode.parentNode;
         
-        if (!completedVisible && target.classList.contains('completeCheck') && target.checked ) {
+        if (!completedVisible && target.classList.contains('completeCheck') && target.checked) {
             parent.classList.add('hidden');
         }
     }
